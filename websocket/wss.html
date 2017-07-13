@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<title>websocket echo</title>
+<script>
+    w = new WebSocket('ws://www.bonobono.net:8080/echo');
+    w.onopen = function() {
+        console.log("open");
+        w.send("first message!!!");
+    }
+ 
+    w.onmessage = function(e) {
+		console.log("receive: " + e.data);
+		document.getElementById("output").innerHTML = e.data;
+    }
+ 
+    w.onclose = function(e) {
+        console.log("closed");
+    }
+ 
+    window.onload = function() {
+        document.getElementById("sendButton").onclick = function() {
+            console.log("send: " + document.getElementById("inputMessage").value);
+            w.send(document.getElementById("inputMessage").value);
+        }
+    }
+</script>
+<input type="text" id="inputMessage" value="test"><button id="sendButton">Send</button>
+<br/><br/>
+<span id="output"></span>
